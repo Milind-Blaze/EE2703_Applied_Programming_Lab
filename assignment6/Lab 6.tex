@@ -1,0 +1,815 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[a4paper, 11pt, margin= 1.25cm]{article}
+
+    
+    \usepackage{multicol}
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Modelling a tubelight}
+    \date{11-03-2018}
+    \author{Milind Kumar V\\ EE16B025}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    %\defi       0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+\begin{multicols}{2}
+    
+    \begin{abstract}\label{abstract}
+
+Tubelights work by the emission of electrons at the cathode that undergo
+accelecration due to an applied electric field and excite atoms which
+emit photons during subsequent relaxation. Thus, models of tubelights
+can be built efficiently and accurately using Python with the aid of
+libraries such as numpy and scipy that enable one to visualise the
+working of this device using intensity plots and phase spaces.
+\end{abstract}
+\section{Introduction}\label{introduction}
+
+The tubelight is modeled as a one dimensional two terminal device with
+the ends being the cathode and the anode. Electrons are emitted at the
+anode and accelerate under an applied uniform electric field $E_0$ with
+an acceleration fo $1ms^{-2}$. When they reach a critical velocity $u_0$
+they can undergo fruitful collisions with atoms that get excited and
+relax immediately to emit photons. Electrons that reach the anode are
+lost. This model is simulated for $nk$ turns, each beginning with an
+injection of electrons. The injection of electrons is modeled as follows
+as a normally distributed random variable.
+
+\begin{equation}
+m = N + Msig \cdot X
+\end{equation}
+
+where X is a normally distributed random variable. Thus
+
+\begin{align}
+E(m) &=N + Msig \cdot E(X) = N\\
+Var(m) &= Msig^2Var(X)\\
+\end{align}
+
+Also $E(X)$ is chosen to be $0$. The integer part of $m$ is chosen to be
+the number of electrons injected. Msig determines the variance of the
+random variable m.
+
+\section{Code and results}\label{code-and-results}
+
+The necessary libraries are imported and the default size for images is
+set.
+   \end{multicols}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k+kn}{import} \PY{n}{division}
+         \PY{o}{\PYZpc{}} \PY{n}{matplotlib} \PY{n}{inline}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k+kn}{import} \PY{n}{cm}\PY{p}{,} \PY{n}{colors}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{sys}
+         \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{c+c1}{\PYZsh{} defining the necessary functions}
+\end{Verbatim}
+
+\begin{multicols}{2}
+    The default parameters are set as given below. Alternately the same can
+be taken from commandline arguments. The default length of the tube is
+taken to be $n=100$ units. Further, the probability that a sufficiently
+energitic electron undergoes a collision in a turn is given by $p$.
+\end{multicols}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{c+c1}{\PYZsh{} defining the constants }
+         
+         \PY{c+c1}{\PYZsh{} defaults}
+         
+         \PY{n}{n}\PY{o}{=} \PY{l+m+mi}{100}
+         \PY{n}{M}\PY{o}{=} \PY{l+m+mi}{5}
+         \PY{n}{nk}\PY{o}{=} \PY{l+m+mi}{500}
+         \PY{n}{u0}\PY{o}{=} \PY{l+m+mi}{7}
+         \PY{n}{p}\PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{Msig}\PY{o}{=}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+        \PY{c+c1}{\PYZsh{} \PYZsh{} considering the command line arguments}
+        \PY{c+c1}{\PYZsh{} if len(sys.argv)\PYZgt{}0:}
+        \PY{c+c1}{\PYZsh{}     n= int(sys.argv[1])}
+        \PY{c+c1}{\PYZsh{}     M= int(sys.argv[2])}
+        \PY{c+c1}{\PYZsh{}     nk= int(sys.argv[3])}
+        \PY{c+c1}{\PYZsh{}     u0= int(sys.argv[4])}
+        \PY{c+c1}{\PYZsh{}     p= int(sys.argv[5])}
+\end{Verbatim}
+
+
+\begin{multicols}{2}
+
+
+The length list, in which each element represents one electron, is made
+sufficiently large. Other arrays are defined as follows\\
+xx - electron position\\
+u  - electron velocity\\
+dx - electron displacement in one turn\\
+I  -list of positions of every photon ever emitted\\
+X  - list of positions of electrons that existed at the end of every turn\\
+V  - the electron velocities corresponding to X\\
+
+\end{multicols}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{length}\PY{o}{=} \PY{n}{n}\PY{o}{*}\PY{n}{M} \PY{c+c1}{\PYZsh{} shouldn\PYZsq{}t it be nk*M?}
+         
+         \PY{c+c1}{\PYZsh{} electron information}
+         
+         \PY{n}{xx}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{)}   \PY{c+c1}{\PYZsh{} electron position}
+         \PY{n}{u}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} electron velocity}
+         \PY{n}{dx}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{)}   \PY{c+c1}{\PYZsh{} disp. in current turn}
+         
+         \PY{c+c1}{\PYZsh{} extra info i don\PYZsq{}t really understand why i\PYZsq{}m defining}
+         
+         \PY{n}{I}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{X}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{V}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+                     
+\end{Verbatim}
+
+\begin{multicols}{2}
+    The code does the following- - ii finds the positions of electrons in
+the array xx which exist. $0$ in the xx array indicates the
+non-existence of an electron. Each existing electron undergoes motion
+according to the equations
+
+
+\begin{align}
+dx &= u_0t + \frac{1}{2}at^2\\
+u &= u_0 + at\\
+\end{align}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Due to this motion, some electrons might reach the anode and get
+  absorbed. Correspondingly, their xx, u, dx values are set to zero.
+  Which basically translates to their disappearance from our simulation
+  universe.
+\item
+  Some electons obtain critical velocity $u_0$. Of these a few undergo
+  collisions leading to immediate photon emission. This is modeled as a
+  uniform random variable. Each energitic electron is assigned a random
+  number (following a uniform distribution) and each electron collides
+  if this number is lesser than $p$ which means the probability of a
+  collsiion is $p$.
+\item
+  The velocities of these colliding electrons are set to zero as they
+  lose all their energy in the collision. Since the collision might
+  occur at any position betweet $x_i$ and $x_{i+1}$ (where $x_i$ is the
+  position of some colliding electron corresponding to the $i^{th}$
+  turn) the new position is updated by subtracting some random fraction
+  of the displacement that had been added to the position of the
+  colliding electron in that turn.
+\item
+  The positions where the collisions occur are appended to the list $I$.
+\item
+  New electrons are generated as explained in Section 1 and fill the
+  empty positionsin the xx lists.
+\item 
+  As can be seen, the index ii is computed only once. It is computed once before the creation of the loop to define the variable ii. 
+\end{itemize}
+\end{multicols}
+       \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{ii}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{xx}\PY{o}{\PYZgt{}}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{nk}\PY{p}{)}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{} to find where electrons are active}
+         \PY{c+c1}{\PYZsh{}    ii= np.where(xx\PYZgt{}0)   }
+             \PY{n}{dx}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{=} \PY{n}{u}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{+}\PY{l+m+mf}{0.5}
+             \PY{n}{xx}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{=} \PY{n}{xx}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{+}\PY{n}{dx}\PY{p}{[}\PY{n}{ii}\PY{p}{]}
+             \PY{n}{u}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{=} \PY{n}{u}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}
+             \PY{n}{anode}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{xx}\PY{o}{\PYZgt{}}\PY{n}{n}\PY{p}{)}
+             \PY{n}{xx}\PY{p}{[}\PY{n}{anode}\PY{p}{]}\PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{dx}\PY{p}{[}\PY{n}{anode}\PY{p}{]}\PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{u}\PY{p}{[}\PY{n}{anode}\PY{p}{]}\PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{kk}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{u}\PY{o}{\PYZgt{}}\PY{n}{u0}\PY{p}{)} \PY{c+c1}{\PYZsh{} electrons with energy}
+             \PY{n}{ll}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{kk}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{n}{p}\PY{p}{)}
+             \PY{n}{kl}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{kk}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{ll}\PY{p}{]}  \PY{c+c1}{\PYZsh{} which electrons will ionize}
+             \PY{n}{u}\PY{p}{[}\PY{n}{kl}\PY{p}{]}\PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{rho}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{xx}\PY{p}{[}\PY{n}{kl}\PY{p}{]}\PY{o}{=} \PY{n}{xx}\PY{p}{[}\PY{n}{kl}\PY{p}{]}\PY{o}{\PYZhy{}} \PY{n}{dx}\PY{p}{[}\PY{n}{kl}\PY{p}{]}\PY{o}{*}\PY{n}{rho} \PY{c+c1}{\PYZsh{} minus cos xx has already been updated with an addition of dx in the loop}
+             \PY{n}{I}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{xx}\PY{p}{[}\PY{n}{kl}\PY{p}{]}\PY{p}{)}
+             \PY{n}{m}\PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{M} \PY{o}{+} \PY{n}{Msig}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} mean  5 standard deviation 2}
+             \PY{n}{new}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{xx}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{xx}\PY{p}{[}\PY{n}{new}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{n}{m}\PY{p}{]}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{n}{ii}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{xx}\PY{o}{\PYZgt{}}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{X}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{xx}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{p}{)}
+             \PY{n}{V}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{u}\PY{p}{[}\PY{n}{ii}\PY{p}{]}\PY{p}{)}
+           
+             
+             
+         
+             
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{n}{size}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Electron density}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of electrons to have ever occupied the bin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n+nb+bp}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}    
+         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\begin{multicols}{2}
+    The following histogram shows I vs position. This is a representation of
+the average value of the number of photons emitted between any two
+consecutive integral positions along hte tubelight and thus a
+representation of the average intensity.
+\end{multicols}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{n}{size}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Intensity (average) of the tubelight vs position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Intensity/ Number of photons emitted}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n+nb+bp}{True}\PY{p}{)}
+         \PY{n}{ret}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{I}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{white}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{vals}\PY{o}{=}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{vals}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{vals}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{n}{vals}\PY{p}{)}\PY{p}{)}
+         \PY{n}{norm} \PY{o}{=} \PY{n}{colors}\PY{o}{.}\PY{n}{Normalize}\PY{p}{(}\PY{n}{vals}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{vals}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{k}{for} \PY{n}{thisfrac}\PY{p}{,} \PY{n}{thispatch} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{vals}\PY{p}{,} \PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n}{color} \PY{o}{=} \PY{n}{cm}\PY{o}{.}\PY{n}{Greys}\PY{p}{(}\PY{n}{norm}\PY{p}{(}\PY{n}{thisfrac}\PY{p}{)}\PY{p}{)}
+             \PY{n}{thispatch}\PY{o}{.}\PY{n}{set\PYZus{}facecolor}\PY{p}{(}\PY{n}{color}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}    
+         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}  
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\begin{multicols}{2}
+    We plot the phase space of the electrons and also make a table of the
+centers of the bins and the intensity (number of photons) values.
+\end{multicols}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{n}{size}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Electron phase space}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{V}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n+nb+bp}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{V}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} 
+         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\begin{multicols}{2}
+    The following is a 2D extension of the one dimensional model wherein the
+intensity value along $y$ axis has been kept the same at a given $x$.
+\end{multicols}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{n}{intensity}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}
+         \PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{intensity}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tubelight, extension from 1D to 2D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\begin{multicols}{2}
+The following code improves upon the previous code in the sense that it
+takes into account the fact that electrnos accelerate post collision in
+a given turn. Further it takes into account the fact that it is the time
+that is uniformly distributed not the position of collision. The outputs
+corresponding to the folowing code are shown. It is evident that a whole
+new set of electron states are made accessible as th electrons begin to
+show low velocities at various high values of x.
+\end{multicols}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+         \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{time}
+          ii= np.where(xx\PYZgt{}0) 
+          for \PYZus{} in range(0,nk):
+          \PYZsh{} to find where electrons are active
+             
+              dx[ii]= u[ii]+0.5
+              xx[ii]= xx[ii]+dx[ii]
+              u[ii]= u[ii]+1
+              anode= np.where(xx\PYZgt{}n)
+              xx[anode]= 0
+              dx[anode]= 0
+              u[anode]= 0
+              kk= np.where(u\PYZgt{}u0) \PYZsh{} electrons with energy
+              ll= np.where(np.random.random(len(kk[0]))\PYZgt{}p)
+              kl= np.array(kk)[0][ll]  \PYZsh{} which electrons will ionize
+              \PYZsh{}u[kl]= 0
+              rho= np.random.random(1)[0]
+              temp=xx[kl]
+              xx[kl]= xx[kl]\PYZhy{} dx[kl]*rho\PYZhy{}0.204+0.241*rho \PYZsh{} 
+              #minus cos xx has already been updated with an addition of dx in the loop
+              t=np.sqrt((u[kl]\PYZhy{}1)**2 + 2*(xx[kl]\PYZhy{}(temp\PYZhy{}dx[kl])))\PYZhy{}u[kl]+1
+              t=1\PYZhy{}t
+              u[kl]=t
+              I.extend(xx[kl])
+              xx[kl]=xx[kl]+0.5*(t**2)
+              m= int(M + Msig*np.random.randn()) \PYZsh{} mean  5 standard deviation 2
+              new= np.where(xx==0)
+              xx[new[0][:m]]=1
+              ii= np.where(xx\PYZgt{}0)
+              X.extend(xx[ii])
+              V.extend(u[ii])
+            
+              
+              
+          
+              
+\end{Verbatim}
+
+The following are the corresponding outputs.
+   \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+        \PY{n}{bins}\PY{o}{=}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{bins}\PY{o}{=} \PY{l+m+mf}{0.5}\PY{o}{*}\PY{p}{(}\PY{n}{bins}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{+}\PY{n}{bins}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Intensity data }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{xpos     count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{bins}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{bins}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mi}{10}\PY{p}{:}
+                \PY{k}{print} \PY{n+nb}{str}\PY{p}{(}\PY{n}{bins}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{       }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{k}{print} \PY{n+nb}{str}\PY{p}{(}\PY{n}{bins}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{      }\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{ret}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Intensity data 
+
+xpos     count
+0.5       0.0
+1.5       0.0
+2.5       0.0
+3.5       0.0
+4.5       0.0
+5.5       0.0
+6.5       0.0
+7.5       0.0
+8.5       0.0
+9.5       0.0
+10.5      0.0
+11.5      0.0
+12.5      0.0
+13.5      0.0
+14.5      0.0
+15.5      0.0
+16.5      0.0
+17.5      0.0
+18.5      0.0
+19.5      0.0
+20.5      0.0
+21.5      0.0
+22.5      0.0
+23.5      0.0
+24.5      0.0
+25.5      81.0
+26.5      212.0
+27.5      328.0
+28.5      152.0
+29.5      119.0
+30.5      123.0
+31.5      170.0
+32.5      139.0
+33.5      86.0
+34.5      201.0
+35.5      54.0
+36.5      68.0
+37.5      65.0
+38.5      50.0
+39.5      69.0
+40.5      71.0
+41.5      55.0
+42.5      31.0
+43.5      30.0
+44.5      21.0
+45.5      84.0
+46.5      30.0
+47.5      28.0
+48.5      31.0
+49.5      34.0
+50.5      28.0
+51.5      55.0
+52.5      48.0
+53.5      145.0
+54.5      65.0
+55.5      63.0
+56.5      103.0
+57.5      79.0
+58.5      72.0
+59.5      76.0
+60.5      100.0
+61.5      87.0
+62.5      178.0
+63.5      53.0
+64.5      83.0
+65.5      67.0
+66.5      73.0
+67.5      68.0
+68.5      85.0
+69.5      63.0
+70.5      87.0
+71.5      67.0
+72.5      95.0
+73.5      78.0
+74.5      30.0
+75.5      48.0
+76.5      59.0
+77.5      89.0
+78.5      41.0
+79.5      70.0
+80.5      64.0
+81.5      80.0
+82.5      72.0
+83.5      59.0
+84.5      55.0
+85.5      57.0
+86.5      51.0
+87.5      83.0
+88.5      95.0
+89.5      92.0
+90.5      77.0
+91.5      63.0
+92.5      57.0
+93.5      47.0
+94.5      51.0
+95.5      41.0
+96.5      29.0
+97.5      32.0
+98.5      16.0
+99.5      8.0
+
+    \end{Verbatim}
+    
+\begin{multicols}{2}
+   The following are the outputs for $u_0= 5$ and $p=0.25$
+\end{multicols}
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{X2.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{I2.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{ps2.png}
+    \end{center}
+
+        \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{tb2.png}
+    \end{center}
+\begin{multicols}{2}
+    \section{Discussion and Conclusion-}\label{discussion-and-conclusion-}
+
+\paragraph{}The population plot of Figure 1 indicates the number of electrons that
+have been at a given position during the simulation. Since all the
+electrons start at the same point the first bin has the highest peak.
+This is followed by $x\approx25$ which is where most electrons have the
+energy necessary for ionisation.
+
+\paragraph{} However the plot of Figure 2 is of far greater interest. It is
+effectively a plot of the number of electron atom collisions or the
+number of photons emitted at a given point or in a given bin. Since most
+of the electrons have insufficent energy for the first 20 - 25 units or
+so, there are no bars in this region. However most of the electrons gain
+sufficient energy by 25 (for the given defaults), and thus cause photon
+emission. Thus there is a huge peak at this point. Electrons that don't
+suffer collisions move on and perhaps do so at later stages contributing
+to the further bars. The next set of peaks is noticed at around 60,
+which incidentally happens to be nearly twice the initial value of
+position of the first peak. This could probably be due to the face that
+a majority of the electrons that suffered collisions at the position of
+the first peak have gained enought energy for a second set of
+collisions.
+
+\paragraph{} The phase space further adds insight. The phase space is the set of all
+possible states of a system. In this case, it is evident that no high
+velocity, low position states are present. This arises from the fact
+that for all low valus of position, until the first peak in intensity,
+the velocity of the electrons is only increasing and there are no
+collisions. Once the electrons have sufficient energy, they begin to
+suffer collisions which means they end up with zero velocity at multiple
+values of X and similarly at higher values of velocity for other
+positions. This means that a multitude of combinations of $X_i$ and
+$V_i$ are possible which is made obvious by the phase space plot.
+
+\paragraph{} To conclude, the various scientific python libraries have been made use
+of effectively to model what is a fairly complex situation which
+inherently involves some randomness. Further the intensity distribution
+of the tube is studied and found to match expectations.
+
+
+    % Add a bibliography block to the postdoc
+    \end{multicols}
+    
+    
+    \end{document}

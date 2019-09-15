@@ -1,0 +1,52 @@
+\documentclass{article}
+
+\title{random stuff}
+\date{2-2-2018}
+\author{Milind Kumar V}
+
+\usepackage{listings}
+%\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{back}{rgb}{0.97,0.97,0.95}
+\begin{document}
+
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Insert code directly in your document}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\lstset{backgroundcolor= \color{back}}
+\begin{lstlisting}
+from __future__ import division
+import numpy as np
+from matplotlib import pyplot as plt
+from functions import function1, taninv, trapezoid_integrate, 
+trapezoid_integrate_for_loop
+
+
+\lstset{
+	language= Python,
+	backgroundcolor=\color{white},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         % must tinker with this
+    breaklines=true,
+    captionpos=b,
+    frame= single,					 % must tinker with this
+
+}
+
+
+
+
+\end{lstlisting}
+
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figure0.png}
+	\caption{figure 0}
+\end{figure}	
+	
+\end{document}
+

@@ -1,0 +1,944 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[a4paper, 12pt, margin= 1.25cm]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+     \title{Spectra of non-periodic signals}
+    \date{25-03-2018}
+    \author{Milind Kumar V\\ EE16B025}
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{abstract}\label{abstract}
+
+In this work, we take a look at the applications of DFT. We explore the
+possibility of the samples of the periodic function being sampled such
+that non integral periods are captured. This of course leads to
+discontinuities in the function which amounts to delta components which
+have all frequencies which cause spectral leakage.
+\end{abstract}
+
+
+\section{Introduction}\label{introduction}
+
+In the following work we look at spectral leakage caused due to improper
+sampling of the function which causes non integral periods to be
+captured leading to abrupt discontinuities in the function which are
+essentially \(\delta(t)\) components or equivalently \$u(t) components.
+These contribute to multiple frequencies being present and consequently
+ruin the spectrum. This is of course remedied by windowing- the
+operation of multiplying a function with another suitable function to
+reduce the effect of jumps.
+
+In this we'll essentially use the (N point) Hamming window given by
+
+\begin{equation}
+H(n)= 0.54 + 0.46\cos(\frac{n}{N-1})
+\end{equation}
+
+where n varies from 0 to N-1.
+
+    \section{Code and Method-}\label{code-and-method-}
+
+First, we make the necessary imports to complete the task at hand.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{pylab} \PY{k}{import} \PY{o}{*}
+        \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{division}
+        \PY{o}{\PYZpc{}} \PY{n}{matplotlib} \PY{n}{inline}
+        \PY{k+kn}{import} \PY{n+nn}{sys}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{n}{matplotlib}\PY{o}{.}\PY{n}{rcParams}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font.size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{18}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{signal} \PY{k}{as} \PY{n+nn}{sp}
+        \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{o}{*}
+        \PY{n}{init\PYZus{}session}
+        \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d}\PY{n+nn}{.}\PY{n+nn}{axes3d} \PY{k}{as} \PY{n+nn}{p3}
+\end{Verbatim}
+
+
+    Here we define a few helper functions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{plotfigure}\PY{p}{(}\PY{n}{figsize}\PY{p}{,}\PY{n}{xlabel}\PY{p}{,}\PY{n}{ylabel}\PY{p}{,}\PY{n}{title}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{style}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{k\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{graph}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{n}{figsize}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{xlabel}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{n}{ylabel}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+            \PY{k}{if} \PY{n}{graph}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{style}\PY{p}{)}
+            \PY{k}{if} \PY{n}{graph}\PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{semilogx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{semilogx}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{style}\PY{p}{)}
+            \PY{k}{if} \PY{n}{graph}\PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{semilogy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{style}\PY{p}{)}
+            \PY{k}{if} \PY{n}{graph}\PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{loglog}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{style}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+            
+        \PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{sin}\PY{p}{(}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{n}{t}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{func2}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{l+m+mf}{0.86}\PY{o}{*}\PY{n}{t}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+        
+        \PY{k}{def} \PY{n+nf}{chirp}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{16}\PY{o}{*}\PY{n}{t}\PY{o}{*}\PY{p}{(}\PY{l+m+mf}{1.5}\PY{o}{+}\PY{p}{(}\PY{n}{t}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{hamming}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    The function we consider here is \(sin(\sqrt{2}t)\) and consider the
+time interval \(\left(-\pi,\pi\right)\). Because we want the phase to be
+purely imaginary, we set the value corresponding to \(-t_{max}\) to
+zero. However, we get a very dissatisfactory plot due to lack of
+windowing.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} plottng the worong dft }
+        \PY{k+kn}{from} \PY{n+nn}{pylab} \PY{k}{import} \PY{o}{*}
+        \PY{n}{t1}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{;} \PY{n}{t1}\PY{o}{=} \PY{n}{t1}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{t2}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{pi}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{;} \PY{n}{t2}\PY{o}{=} \PY{n}{t2}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{t3}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{;} \PY{n}{t3}\PY{o}{=} \PY{n}{t3}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{dt} \PY{o}{=} \PY{n}{t1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{t1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{fmax}\PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{n}{dt}
+        \PY{n}{y}\PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}
+        \PY{n}{y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0}
+        \PY{n}{Y}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}contiuous time omega }
+        \PY{n}{w}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} first and second argument\PYZhy{} continous time sampling}
+        \PY{c+c1}{\PYZsh{} third argument\PYZhy{} N point DFT}
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Spectrum of \PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of \PYZdl{}Y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{omega\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The following is a plot of the function in the continuous time domain.
+As expected, it is continuous.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} understanding what went wrong}
+        
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t1}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t2}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t3}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t3}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}t\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This is where the sampling kicks in. The duration chosen is not an
+integral multiple of the period and thus when extended periodically
+(which is what the DFT analyses) produces a function with jumps.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} function being analysed by DFT}
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t1}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t2}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t3}\PY{p}{,}\PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}t\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fig10\PYZhy{}2.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{y}\PY{o}{=}\PY{n}{t1}
+        \PY{n}{y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0} \PY{c+c1}{\PYZsh{} the sample corresponding to \PYZhy{}tmax should be set zeroo}
+        \PY{n}{y}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} make y start with y(t=0)}
+        \PY{n}{Y}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{64.0}
+        \PY{n}{w}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{;}\PY{n}{w}\PY{o}{=}\PY{n}{w}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{figure}\PY{p}{(}\PY{p}{)}
+        \PY{n}{semilogx}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{20}\PY{o}{*}\PY{n}{log10}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{} (dB)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Spectrum of a digital ramp}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{omega\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    By windowing, we essentially supress the jumps at the edges and thus can
+approach the function desired.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} we begin to window}
+        \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{64}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{63}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y}\PY{o}{=}\PY{n}{func}\PY{p}{(}\PY{n}{t1}\PY{p}{)}\PY{o}{*}\PY{n}{window}
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t1}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t2}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{t3}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}t\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{times w(t)\PYZdl{} with \PYZdl{}t\PYZdl{} wrapping every \PYZdl{}2}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{pi\PYZdl{} }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The windowed function provides a desirable spectrum that lacks in
+resolution due to insufficient number of points.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0}
+        \PY{n}{Y}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+        \PY{n}{w}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Spectrum of \PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{times w(t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of \PYZdl{}Y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{omega\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Time frequency resolution is improved by considering a larger time
+interval increasing the number of points proportionate to increase only
+the net number of points
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{t4}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{o}{*}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{4}\PY{o}{*}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{257}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{y}\PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{n}{t4}\PY{p}{)}
+        \PY{n}{y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{0}
+        \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y}\PY{o}{=}\PY{n}{window}\PY{o}{*}\PY{n}{y}
+        \PY{n}{Y}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{256}
+        \PY{n}{w}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{257}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Spectrum of \PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sin}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{left(}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{sqrt}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{right)}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{times w(t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of \PYZdl{}Y\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{omega\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Next we look at the function \(\cos^{3}(0.86t)\). This has components at
+\(\omega= 0.86\) and at \(\omega= 2.64\). Thus, it is expected to have
+four peaks in all. The DFT is obtained both with and without windowing.
+From the obtained spectrum it is evident that we require greater
+resolution in the frequency domain and thus require greater interval and
+correspondingly higher number of points.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{y1}\PY{o}{=} \PY{n}{func2}\PY{p}{(}\PY{n}{t1}\PY{p}{)}
+         \PY{n}{y1}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}
+         \PY{n}{Y1}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+         \PY{c+c1}{\PYZsh{} repeating the same for cos cube of 0.86t}
+         \PY{n}{window}\PY{o}{=} \PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{64}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{63}\PY{p}{)}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+         \PY{n}{y2}\PY{o}{=} \PY{n}{window}\PY{o}{*}\PY{n}{func2}\PY{p}{(}\PY{n}{t1}\PY{p}{)}
+         \PY{n}{y2}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{y2}\PY{p}{)}
+         \PY{n}{Y2}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y2}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+         \PY{n}{w}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DFT of \PYZdl{}cos\PYZca{}3(0.86t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} repeating the same for cos cube of 0.86t with more points}
+         \PY{n}{window}\PY{o}{=}  \PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+         \PY{n}{y}\PY{o}{=} \PY{n}{window}\PY{o}{*}\PY{n}{func2}\PY{p}{(}\PY{n}{t4}\PY{p}{)}
+         \PY{n}{y}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+         \PY{n}{Y}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{256}
+         \PY{n}{w}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{257}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} (-10, 10)
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    With sufficient number of points the peaks become quite distinct. It is
+also evident that the windowing process makes things much better for the
+spectrum. Further, the peaks also occur at the expected values. However,
+it is worth noting that the ouput is smeared out due to windowing.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{y1}\PY{o}{=} \PY{n}{func2}\PY{p}{(}\PY{n}{t4}\PY{p}{)}
+         \PY{n}{y1}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}
+         \PY{n}{Y1}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+         \PY{c+c1}{\PYZsh{} repeating the same for cos cube of 0.86t}
+         \PY{n}{window}\PY{o}{=} \PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{255}\PY{p}{)}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+         \PY{n}{y2}\PY{o}{=} \PY{n}{window}\PY{o}{*}\PY{n}{func2}\PY{p}{(}\PY{n}{t4}\PY{p}{)}
+         \PY{n}{y2}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{y2}\PY{p}{)}
+         \PY{n}{Y2}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{y2}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{256}
+         \PY{n}{w}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{257}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DFT of \PYZdl{}cos\PYZca{}3(0.86t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DFT of \PYZdl{}cos\PYZca{}3(0.86t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The chirp signal is plotted for the sake of visualisation.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{n}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{3072}\PY{p}{)}
+         \PY{n}{plotfigure}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}f(t)\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The chirped signal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{chirp}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The same DFT procedure is performed for the chirped signal and a
+comparision is made of the DFTs obained by the windowed and non windowed
+waveforms. It can be shown that windowing operations considerably
+distort the chirp signal and consequently it is better to model in the
+time domain. That being said, further analysis will be performed only
+with the non-windowed waveform. However, on modification, the well known
+bell waveform is obtained.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{t}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{1025}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{fmax}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{l+m+mf}{0.54}\PY{o}{+}\PY{l+m+mf}{0.46}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{*}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{1023}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{y1}\PY{o}{=} \PY{n}{chirp}\PY{p}{(}\PY{n}{t}\PY{p}{)}
+         \PY{n}{Y1}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{1024}
+         \PY{n}{w}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{1025}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{y2}\PY{o}{=}\PY{n}{y1}\PY{o}{*}\PY{n}{window}
+         \PY{n}{Y2}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y2}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{1024}
+         
+         \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DFT of chirp signal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{]}\PY{p}{)}
+         \PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{]}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DFT of chirp signal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}|Y|\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{]}\PY{p}{)}
+         \PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Phase of Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y2}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{With Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{]}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    In the following piece of code, we attempt to plot a spectrogram or a
+time frequency plot of the given signal by breaking up the 1024 sized
+vector into 16 bins. We take FFT of each of these bins and then plot a
+3D surface plot.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} finding DFT}
+         \PY{c+c1}{\PYZsh{} reshape the non windowed function}
+         \PY{n}{y1}\PY{o}{=} \PY{n}{y1}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{1024}\PY{o}{/}\PY{o}{/}\PY{l+m+mi}{64}\PY{p}{,}\PY{l+m+mi}{64} \PY{p}{)}
+         \PY{n}{Y1}\PY{o}{=}\PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{64}
+         \PY{n}{w}\PY{o}{=}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{64}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} print (Y1.shape)}
+         \PY{n}{fig4}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} open a new figure}
+         \PY{n}{ax}\PY{o}{=}\PY{n}{p3}\PY{o}{.}\PY{n}{Axes3D}\PY{p}{(}\PY{n}{fig4}\PY{p}{)} \PY{c+c1}{\PYZsh{} Axes3D is the means to do a surface plot}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Time frequency plot without Hamming window}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frequency}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{)}\PY{p}{,}\PY{n}{w}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} print (x.shape)}
+         \PY{c+c1}{\PYZsh{} print (y.shape)}
+         \PY{c+c1}{\PYZsh{} print ()}
+         \PY{c+c1}{\PYZsh{} Y1[where(abs(y.T)\PYZgt{}100)]=\PYZhy{}100}
+         \PY{n}{surf} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot\PYZus{}surface}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{T}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{29}\PY{p}{:}\PY{l+m+mi}{38}\PY{p}{]}\PY{p}{,}\PY{n}{x}\PY{o}{.}\PY{n}{T}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{29}\PY{p}{:}\PY{l+m+mi}{38}\PY{p}{]}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{29}\PY{p}{:}\PY{l+m+mi}{38}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{rstride}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} 
+                                \PY{n}{cstride}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{cmap}\PY{o}{=} \PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{,}\PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}xlim([\PYZhy{}100,100])}
+         \PY{c+c1}{\PYZsh{} print((y.T[:,25:40]).shape)}
+         \PY{c+c1}{\PYZsh{} print((Y1[:,25:40]).shape)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(64, 16)
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    To understand the variation in peaks, we plot a contour plot
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Contour plot\PYZhy{} time\PYZhy{}frequency plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+         \PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{]}\PY{p}{)}
+         \PY{n}{contourf}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{x}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{jet}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{w}\PY{o}{=} \PY{n}{random}\PY{p}{(}\PY{p}{)}\PY{o}{+}\PY{l+m+mf}{0.5}
+         \PY{n}{p}\PY{o}{=} \PY{n}{random}\PY{p}{(}\PY{p}{)}
+         \PY{n}{t}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{129}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{fmax}\PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n}{y}\PY{o}{=} \PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{o}{+}\PY{n}{p}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{hamming}\PY{p}{(}\PY{l+m+mi}{128}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+         \PY{n}{y1}\PY{o}{=} \PY{n}{y}\PY{o}{*}\PY{n}{window}
+         \PY{n}{Y}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{128}
+         \PY{n}{w1}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{129}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w1}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{)}
+         \PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w1}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{guessw}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{w1}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         \PY{n}{guessd}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{p}{(}\PY{n}{arccos}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{guessw}\PY{o}{*}\PY{n}{t}\PY{p}{)}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{guessd}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{guessw}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{w}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.5122277051633387
+0.5122277051633387
+1.2040217957366757
+0.8559215600797823
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{w}\PY{o}{=} \PY{n}{random}\PY{p}{(}\PY{p}{)}\PY{o}{+}\PY{l+m+mf}{0.5}
+         \PY{n}{p}\PY{o}{=} \PY{n}{random}\PY{p}{(}\PY{p}{)}
+         \PY{n}{t}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{129}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{fmax}\PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n}{y}\PY{o}{=} \PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{o}{+}\PY{n}{p}\PY{p}{)}\PY{o}{+}\PY{l+m+mf}{0.1}\PY{o}{*}\PY{n}{randn}\PY{p}{(}\PY{l+m+mi}{128}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{hamming}\PY{p}{(}\PY{l+m+mi}{128}\PY{p}{)}
+         \PY{n}{window}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+         \PY{n}{y1}\PY{o}{=} \PY{n}{y}\PY{o}{*}\PY{n}{window}
+         \PY{n}{Y}\PY{o}{=} \PY{n}{fftshift}\PY{p}{(}\PY{n}{fft}\PY{p}{(}\PY{n}{fftshift}\PY{p}{(}\PY{n}{y1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{128}
+         \PY{n}{w1}\PY{o}{=} \PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{n}{pi}\PY{o}{*}\PY{n}{fmax}\PY{p}{,}\PY{l+m+mi}{129}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w1}\PY{p}{,}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{)}
+         \PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plot}\PY{p}{(}\PY{n}{w1}\PY{p}{,}\PY{n}{angle}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{guessw}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{w1}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         \PY{n}{guessd}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{p}{(}\PY{n}{arccos}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{guessw}\PY{o}{*}\PY{n}{t}\PY{p}{)}\PY{p}{[}\PY{n}{where}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mf}{5e\PYZhy{}2}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{guessd}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{guessw}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{w}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.12919297215861214
+nan
+1.3333333333333357
+0.5338563899488208
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/milind/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:15: RuntimeWarning: invalid value encountered in arccos
+  from ipykernel import kernelapp as app
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Discussion and Conclusion-}\label{discussion-and-conclusion-}
+
+Windowing is thus quite useful when one is not aware of the period of
+the function and thus can not sample so as to avoid discontinuities.
+Windowing supresses discontinuities at the price of smearing out of the
+existing peaks. The window used here is the Hamming window.
+
+For the \(\sin(\sqrt{2t})\) and \(\cos^3(t)\) examples, the spectra
+improve with windowing and appropriate sampling intervals. The chirp
+signal is far more interesting, with the frequency component present in
+the signal changing with time. Thus the chirp signal displays
+frequencies ranging from around \(16 rad s^{-1}\) to \(32 rad s^{-1}\).
+This leads to the broad spectrum (obviously with some leakage). The time
+frequency plot of the signal shows that the frequency compnonents
+present grow larger and larger as time elapsed increases.
+
+The estimation of the values of \(\omega\) and \(\delta\) for the given
+128 sample vector is fairly hard. Despite windowing it is hard to obtain
+a good estimate due to insufficient resolution in the frequency domain.
+However, it is possible to get a fairly accurate estimate of \(\delta\).
+The addition of gaussian noise clearly makes things much harder.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
